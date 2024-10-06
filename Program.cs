@@ -3,6 +3,8 @@ using OOP.Encapsulation;
 using OOP.Inheritance;
 using OOP.NotAbstraction;
 using OOP.NotEncapsulation;
+using OOP.NotPolymorphism;
+using OOP.Polymorphism;
 
 namespace OOP
 {
@@ -17,6 +19,35 @@ namespace OOP
             Abstraction();
 
             Inheritance();
+
+            NotPolymorphism();
+            Polymorphism();
+        }
+
+        private static void NotPolymorphism()
+        {
+            BadECommerceSystem badEcommerceSystem = new BadECommerceSystem();
+
+            // Process payment without polymorphism
+            badEcommerceSystem.Checkout(100.50m, "CreditCard");   // Output: Processing credit card payment of $100.50
+            badEcommerceSystem.Checkout(75.25m, "PayPal");        // Output: Processing PayPal payment of $75.25
+            badEcommerceSystem.Checkout(300.00m, "BankTransfer"); // Output: Processing bank transfer payment of $300.00
+        }
+
+        private static void Polymorphism()
+        {
+            var ecommerceSystem = new ECommerceSystem();
+
+            /*Interface Implementation*/
+            // Using polymorphism to handle different payment methods
+            IPaymentProcessor creditCardPayment = new CreditCardPayment();
+            IPaymentProcessor payPalPayment = new PayPalPayment();
+            IPaymentProcessor bankTransferPayment = new BankTransferPayment();
+
+            // Process payments with different methods
+            ecommerceSystem.Checkout(100.50m, creditCardPayment);  // Output: Processing credit card payment of $100.50
+            ecommerceSystem.Checkout(75.25m, payPalPayment);       // Output: Processing PayPal payment of $75.25
+            ecommerceSystem.Checkout(300.00m, bankTransferPayment); // Output: Processing bank transfer payment of $300.00 
         }
 
         private static void Inheritance()
